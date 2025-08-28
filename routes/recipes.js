@@ -6,7 +6,6 @@ const {
   validateIdParam,
 } = require("../middlewares/validators");
 
-// CRUD
 router.get("/", ctrl.getAll);
 router.get("/stats", ctrl.getStats);
 router.get("/:id", validateIdParam, ctrl.getById);

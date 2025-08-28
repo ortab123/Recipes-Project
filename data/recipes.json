@@ -1,1 +1,70 @@
-[]
+[
+  {
+    "id": "1a111111-aaaa-1111-aaaa-111111111111",
+    "title": "Pasta Carbonara",
+    "description": "Classic Italian pasta with eggs, cheese, pancetta, and pepper.",
+    "ingredients": ["pasta", "eggs", "pancetta", "parmesan", "pepper"],
+    "instructions": ["Boil pasta", "Cook pancetta", "Mix with eggs and cheese"],
+    "cookingTime": 25,
+    "servings": 2,
+    "difficulty": "medium",
+    "rating": 4.5,
+    "createdAt": "2025-08-28T10:00:00.000Z"
+  },
+  {
+    "id": "2b222222-bbbb-2222-bbbb-222222222222",
+    "title": "Greek Salad",
+    "description": "Refreshing salad with feta cheese and olives.",
+    "ingredients": ["tomato", "cucumber", "feta", "olives", "olive oil"],
+    "instructions": [
+      "Chop veggies",
+      "Mix with feta and olives",
+      "Dress with olive oil"
+    ],
+    "cookingTime": 10,
+    "servings": 4,
+    "difficulty": "easy",
+    "rating": 4.2,
+    "createdAt": "2025-08-28T10:05:00.000Z"
+  },
+  {
+    "id": "3c333333-cccc-3333-cccc-333333333333",
+    "title": "Chocolate Cake",
+    "description": "Rich and moist chocolate cake with frosting.",
+    "ingredients": ["flour", "cocoa powder", "eggs", "sugar", "butter"],
+    "instructions": [
+      "Mix ingredients",
+      "Bake for 40 minutes",
+      "Cool and frost"
+    ],
+    "cookingTime": 50,
+    "servings": 8,
+    "difficulty": "medium",
+    "rating": 4.8,
+    "createdAt": "2025-08-28T10:10:00.000Z"
+  },
+  {
+    "id": "4d444444-dddd-4444-dddd-444444444444",
+    "title": "Beef Stew",
+    "description": "Slow-cooked beef with vegetables in rich gravy.",
+    "ingredients": ["beef", "carrots", "potatoes", "onion", "stock"],
+    "instructions": ["Brown beef", "Add veggies", "Simmer for 2 hours"],
+    "cookingTime": 120,
+    "servings": 6,
+    "difficulty": "hard",
+    "rating": 4.7,
+    "createdAt": "2025-08-28T10:15:00.000Z"
+  },
+  {
+    "id": "5e555555-eeee-5555-eeee-555555555555",
+    "title": "Avocado Toast",
+    "description": "Quick snack with avocado and spices.",
+    "ingredients": ["bread", "avocado", "salt", "pepper", "lemon"],
+    "instructions": ["Toast bread", "Mash avocado", "Spread and season"],
+    "cookingTime": 5,
+    "servings": 1,
+    "difficulty": "easy",
+    "rating": 4.0,
+    "createdAt": "2025-08-28T10:20:00.000Z"
+  }
+]

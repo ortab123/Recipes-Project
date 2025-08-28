@@ -142,7 +142,7 @@ async function getStats(req, res, next) {
     }
     const mostCommonIngredients = Object.entries(ingredientCounts)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
+      .slice(0, 5)
       .map(([ingredient, count]) => ({ ingredient, count }));
 
     res.json({
