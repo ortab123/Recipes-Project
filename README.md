@@ -1,11 +1,11 @@
-# Recipes API
+# 🍳 Recipes API
 
 A simple REST API for managing recipes, built with **Node.js** and **Express**.  
 This is an **ongoing project** — new features and improvements are added every week.
 
 ---
 
-## Technologies Used
+## 🛠 Technologies Used
 
 - **Node.js** + **Express**
 - **UUID** for unique recipe IDs
@@ -16,7 +16,7 @@ This is an **ongoing project** — new features and improvements are added every
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 controllers/
@@ -49,61 +49,43 @@ npm install
 npm start
 
 The server runs by default on:
-http://localhost:3000
+👉http://localhost:3000
 
 ```
 
-## Current Features:
+## ✨ Current Features:
 
-CRUD for recipes: create, read, update, delete
+- CRUD for recipes: create, read, update, delete
+- Filtering by difficulty, max cooking time, search query, and minimum rating
+- Sorting by date, rating, or cooking time
+- Update recipe rating through a dedicated endpoint
+- Basic statistics endpoint (recipe count, average cooking time, most common ingredients)
+- Rate limiting (20 requests per minute per IP)
+- Logging with Morgan using the dev format
 
-Filtering by difficulty, max cooking time, search query, and minimum rating
+## 🧭 Planned Features:
 
-Sorting by date, rating, or cooking time
+- More validation rules (via validators.js)
+- Authentication and user management
+- Switch from JSON file to a real database
+- Unit tests and integration tests
+- Advanced search and pagination
 
-Update recipe rating through a dedicated endpoint
+## 📌 API Endpoints (Overview):
 
-Basic statistics endpoint (recipe count, average cooking time, most common ingredients)
-
-Rate limiting (20 requests per minute per IP)
-
-Logging with Morgan using the dev format
-
-## Planned Features
-
-More validation rules (via validators.js)
-
-Authentication and user management
-
-Switch from JSON file to a real database
-
-Unit tests and integration tests
-
-Advanced search and pagination
-
-## API Endpoints (Overview)
-
-GET /api/recipes — fetch all recipes (with filtering/sorting options)
-
-GET /api/recipes/:id — fetch a single recipe by ID
-
-POST /api/recipes — create a new recipe
-
-PATCH /api/recipes/:id — update an existing recipe
-
-PATCH /api/recipes/:id/rating — update recipe rating only
-
-DELETE /api/recipes/:id — remove a recipe
-
-GET /api/recipes/stats — fetch general recipe statistics
+- GET /api/recipes — fetch all recipes (with filtering/sorting options)
+- GET /api/recipes/:id — fetch a single recipe by ID
+- POST /api/recipes — create a new recipe
+- PATCH /api/recipes/:id — update an existing recipe
+- PATCH /api/recipes/:id/rating — update recipe rating only
+- DELETE /api/recipes/:id — remove a recipe
+- GET /api/recipes/stats — fetch general recipe statistics
 
 ## Notes
 
-This project is still under development — expect frequent updates.
-
-For testing, Postman collections are recommended.
-
-No database is used yet — all data is stored in recipes.json.
+- This project is still under development — expect frequent updates.
+- For testing, Postman collections are recommended.
+- No database is used yet — all data is stored in recipes.json.
 
 ```
 
