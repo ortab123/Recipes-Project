@@ -7,7 +7,8 @@ async function getAll(req, res, next) {
   try {
     let recipes = await readData();
 
-    const { difficulty, maxCookingTime, search } = req.query;
+    const { difficulty, maxCookingTime, search, minRating, sortBy, sortOrder } =
+      req.query;
 
     if (difficulty && allowedDifficulties.includes(difficulty)) {
       recipes = recipes.filter((r) => r.difficulty === difficulty);
@@ -27,6 +28,22 @@ async function getAll(req, res, next) {
           r.title.toLowerCase().includes(q) ||
           (r.description && r.description.toLowerCase().includes(q))
       );
+    }
+
+    if (minRating) {
+      recipes = recipes.filter(
+        (r) => Number(r.rating || 0) >= Number(minRating)
+      );
+    }
+
+    if (sortBy) {
+      const order = sortOrder === "desc" ? -1 : 1;
+      recipes.sort((a, b) => {
+        if (sortBy === "createdAt") {
+          return (new Date(a.createdAt) - new Date(b.createdAt)) * order;
+        }
+        return (Number(a[sortBy] || 0) - Number(b[sortBy] || 0)) * order;
+      });
     }
 
     res.json(recipes);
