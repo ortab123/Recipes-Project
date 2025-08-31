@@ -1,13 +1,20 @@
 [
   {
     "id": "1a111111-aaaa-1111-aaaa-111111111111",
-    "title": "Pasta Carbonara",
-    "description": "Classic Italian pasta with eggs, cheese, pancetta, and pepper.",
-    "ingredients": ["pasta", "eggs", "pancetta", "parmesan", "pepper"],
-    "instructions": ["Boil pasta", "Cook pancetta", "Mix with eggs and cheese"],
-    "cookingTime": 25,
-    "servings": 2,
-    "difficulty": "medium",
+    "title": "Pasta Carbonara Updated",
+    "description": "New description",
+    "ingredients": [
+      "pasta",
+      "eggs",
+      "parmesan"
+    ],
+    "instructions": [
+      "Step1",
+      "Step2"
+    ],
+    "cookingTime": 20,
+    "servings": 3,
+    "difficulty": "easy",
     "rating": 4.5,
     "createdAt": "2025-08-28T10:00:00.000Z"
   },
@@ -15,7 +22,13 @@
     "id": "2b222222-bbbb-2222-bbbb-222222222222",
     "title": "Greek Salad",
     "description": "Refreshing salad with feta cheese and olives.",
-    "ingredients": ["tomato", "cucumber", "feta", "olives", "olive oil"],
+    "ingredients": [
+      "tomato",
+      "cucumber",
+      "feta",
+      "olives",
+      "olive oil"
+    ],
     "instructions": [
       "Chop veggies",
       "Mix with feta and olives",
@@ -31,7 +44,13 @@
     "id": "3c333333-cccc-3333-cccc-333333333333",
     "title": "Chocolate Cake",
     "description": "Rich and moist chocolate cake with frosting.",
-    "ingredients": ["flour", "cocoa powder", "eggs", "sugar", "butter"],
+    "ingredients": [
+      "flour",
+      "cocoa powder",
+      "eggs",
+      "sugar",
+      "butter"
+    ],
     "instructions": [
       "Mix ingredients",
       "Bake for 40 minutes",
@@ -47,8 +66,18 @@
     "id": "4d444444-dddd-4444-dddd-444444444444",
     "title": "Beef Stew",
     "description": "Slow-cooked beef with vegetables in rich gravy.",
-    "ingredients": ["beef", "carrots", "potatoes", "onion", "stock"],
-    "instructions": ["Brown beef", "Add veggies", "Simmer for 2 hours"],
+    "ingredients": [
+      "beef",
+      "carrots",
+      "potatoes",
+      "onion",
+      "stock"
+    ],
+    "instructions": [
+      "Brown beef",
+      "Add veggies",
+      "Simmer for 2 hours"
+    ],
     "cookingTime": 120,
     "servings": 6,
     "difficulty": "hard",
@@ -59,12 +88,48 @@
     "id": "5e555555-eeee-5555-eeee-555555555555",
     "title": "Avocado Toast",
     "description": "Quick snack with avocado and spices.",
-    "ingredients": ["bread", "avocado", "salt", "pepper", "lemon"],
-    "instructions": ["Toast bread", "Mash avocado", "Spread and season"],
+    "ingredients": [
+      "bread",
+      "avocado",
+      "salt",
+      "pepper",
+      "lemon"
+    ],
+    "instructions": [
+      "Toast bread",
+      "Mash avocado",
+      "Spread and season"
+    ],
     "cookingTime": 5,
     "servings": 1,
     "difficulty": "easy",
-    "rating": 4.0,
+    "rating": 4,
     "createdAt": "2025-08-28T10:20:00.000Z"
+  },
+  {
+    "id": "e13bf568-1d76-4ed2-9e65-c22f7ef7e4a7",
+    "title": "Vegetable Stir Fry",
+    "description": "Quick and colorful stir-fried vegetables with soy sauce and garlic.",
+    "ingredients": [
+      "broccoli",
+      "carrot",
+      "bell pepper",
+      "soy sauce",
+      "garlic",
+      "ginger",
+      "sesame oil"
+    ],
+    "instructions": [
+      "Chop vegetables",
+      "Heat sesame oil in wok",
+      "Stir-fry garlic and ginger",
+      "Add vegetables and cook until tender-crisp",
+      "Season with soy sauce and serve"
+    ],
+    "cookingTime": 15,
+    "servings": 3,
+    "difficulty": "easy",
+    "rating": 4.3,
+    "createdAt": "2025-08-31T09:48:12.085Z"
   }
 ]
