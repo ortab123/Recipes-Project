@@ -102,6 +102,27 @@ async function update(req, res, next) {
   }
 }
 
+async function updateRating(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { rating } = req.body;
+    if (rating === null || isNaN(Number(rating))) {
+      return next({ statusCode: 400, message: "Rating must be a number" });
+    }
+
+    const recipes = await readData();
+    const idx = recipes.findIndex((r) => r.id === id);
+    if (idx === -1)
+      return next({ statusCode: 404, message: "Recipe not found" });
+
+    recipes[idx].rating = Number(rating);
+    await writeData(recipes);
+    res.json({ message: "Rating updated", recipe: recipes[idx] });
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function remove(req, res, next) {
   try {
     const id = req.params.id;
@@ -156,4 +177,12 @@ async function getStats(req, res, next) {
   }
 }
 
-module.exports = { getAll, getById, create, update, remove, getStats };
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  remove,
+  getStats,
+  updateRating,
+};
