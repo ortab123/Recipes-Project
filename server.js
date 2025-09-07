@@ -4,6 +4,7 @@ const { errorHandler } = require("./middlewares/errorHandler");
 const limiter = require("./middlewares/rateLimiter");
 const recipesRouter = require("./routes/recipes");
 const authRouter = require("./routes/auth");
+const favoritesRouter = require("./routes/favorites");
 const sequelize = require("./config/database");
 const User = require("./models/user");
 const Recipe = require("./models/recipe");
@@ -31,6 +32,9 @@ app.use("/api/auth", authRouter);
 // 🍲 Recipes routes
 app.use("/api/recipes", limiter);
 app.use("/api/recipes", recipesRouter);
+
+// ⭐ Favorites routes
+app.use("/api/users/favorites", favoritesRouter);
 
 // 🛑 Error handling
 app.use(errorHandler);

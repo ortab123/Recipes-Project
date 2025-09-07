@@ -7,6 +7,8 @@ const {
 } = require("../middlewares/validators");
 const upload = require("../middlewares/upload");
 const authMiddleware = require("../middlewares/authMiddleware");
+const checkRecipeOwnership = require("../middlewares/checkRecipeOwnership");
+// console.log("checkRecipeOwnership loaded:", typeof checkRecipeOwnership);
 const preprocessRecipe = require("../middlewares/preprocessRecipe");
 
 // GET
@@ -25,16 +27,34 @@ router.post(
 );
 router.put(
   "/:id",
+  validateIdParam,
   authMiddleware,
+  // (req, res, next) => {
+  //   console.log("Before checkRecipeOwnership middleware");
+  //   next();
+  // },
+  checkRecipeOwnership,
   upload.single("image"),
   preprocessRecipe,
-  validateIdParam,
   validateRecipe,
   ctrl.update
 );
 
 // PATCH + DELETE
-router.patch("/:id/rating", authMiddleware, ctrl.updateRating);
-router.delete("/:id", authMiddleware, validateIdParam, ctrl.remove);
+router.patch(
+  "/:id/rating",
+  validateIdParam,
+  authMiddleware,
+  checkRecipeOwnership,
+  ctrl.updateRating
+);
+
+router.delete(
+  "/:id",
+  validateIdParam,
+  authMiddleware,
+  checkRecipeOwnership,
+  ctrl.remove
+);
 
 module.exports = router;

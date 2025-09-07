@@ -37,8 +37,10 @@ const validateRecipe = [
   body("rating").optional().isFloat({ min: 0, max: 5 }).toFloat(),
 
   (req, res, next) => {
+    console.log("🔍 req.body before validation:", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log("❌ Validation errors:", errors.array());
       return next({
         statusCode: 400,
         message: "Validation failed",
