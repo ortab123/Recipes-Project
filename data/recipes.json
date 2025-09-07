@@ -131,5 +131,45 @@
     "difficulty": "easy",
     "rating": 4.3,
     "createdAt": "2025-08-31T09:48:12.085Z"
+  },
+  {
+    "id": "15a7301a-dc97-47f9-9c64-5a67848bab14",
+    "title": "Omelette2",
+    "description": "Healthy breakfast",
+    "ingredients": [
+      "3 eggs",
+      "sunflower oil",
+      "butter",
+      "bread"
+    ],
+    "instructions": [
+      "Toast bread",
+      "Mash avocado"
+    ],
+    "cookingTime": 10,
+    "servings": 1,
+    "difficulty": "easy",
+    "rating": null,
+    "createdAt": "2025-09-06T15:03:37.216Z",
+    "imageUrl": "uploads\\recipes\\1757171017209-925931577.jpg"
+  },
+  {
+    "id": "d66c62ac-51a4-4055-a7f5-ac7cf502b358",
+    "title": "Pizza",
+    "description": "Delicious pizza",
+    "ingredients": [
+      "flour",
+      "cheese"
+    ],
+    "instructions": [
+      "mix",
+      "bake"
+    ],
+    "cookingTime": 30,
+    "servings": 2,
+    "difficulty": "easy",
+    "rating": 5,
+    "createdAt": "2025-09-06T21:08:12.884Z",
+    "imageUrl": "uploads\\recipes\\1757192892881-449488331.jpeg"
   }
 ]

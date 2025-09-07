@@ -1,62 +1,51 @@
-const { v4: uuidv4 } = require("uuid");
-const { readData, writeData } = require("../utils/dataStore");
+const Recipe = require("../models/recipe");
+const { Op } = require("sequelize");
 
 const allowedDifficulties = ["easy", "medium", "hard"];
 
+// GET /api/recipes
 async function getAll(req, res, next) {
   try {
-    let recipes = await readData();
-
     const { difficulty, maxCookingTime, search, minRating, sortBy, sortOrder } =
       req.query;
 
+    const where = {};
+
     if (difficulty && allowedDifficulties.includes(difficulty)) {
-      recipes = recipes.filter((r) => r.difficulty === difficulty);
+      where.difficulty = difficulty;
     }
 
     if (maxCookingTime) {
-      const max = Number(maxCookingTime);
-      if (!Number.isNaN(max)) {
-        recipes = recipes.filter((r) => Number(r.cookingTime) <= max);
-      }
-    }
-
-    if (search) {
-      const q = search.toLowerCase();
-      recipes = recipes.filter(
-        (r) =>
-          r.title.toLowerCase().includes(q) ||
-          (r.description && r.description.toLowerCase().includes(q))
-      );
+      where.cookingTime = { [Op.lte]: Number(maxCookingTime) };
     }
 
     if (minRating) {
-      recipes = recipes.filter(
-        (r) => Number(r.rating || 0) >= Number(minRating)
-      );
+      where.rating = { [Op.gte]: Number(minRating) };
     }
 
+    if (search) {
+      where[Op.or] = [
+        { title: { [Op.like]: `%${search}%` } },
+        { description: { [Op.like]: `%${search}%` } },
+      ];
+    }
+
+    const order = [];
     if (sortBy) {
-      const order = sortOrder === "desc" ? -1 : 1;
-      recipes.sort((a, b) => {
-        if (sortBy === "createdAt") {
-          return (new Date(a.createdAt) - new Date(b.createdAt)) * order;
-        }
-        return (Number(a[sortBy] || 0) - Number(b[sortBy] || 0)) * order;
-      });
+      order.push([sortBy, sortOrder === "desc" ? "DESC" : "ASC"]);
     }
 
+    const recipes = await Recipe.findAll({ where, order });
     res.json(recipes);
   } catch (err) {
     next(err);
   }
 }
 
+// GET /api/recipes/:id
 async function getById(req, res, next) {
   try {
-    const id = req.params.id;
-    const recipes = await readData();
-    const recipe = recipes.find((r) => r.id === id);
+    const recipe = await Recipe.findByPk(req.params.id);
     if (!recipe) return next({ statusCode: 404, message: "Recipe not found" });
     res.json(recipe);
   } catch (err) {
@@ -64,26 +53,24 @@ async function getById(req, res, next) {
   }
 }
 
+// POST /api/recipes
 async function create(req, res, next) {
   try {
-    const recipes = await readData();
-    const body = req.body;
+    console.log(req.user);
+    const body = req.body.recipe ? JSON.parse(req.body.recipe) : {};
 
-    const newRecipe = {
-      id: uuidv4(),
+    const newRecipe = await Recipe.create({
       title: body.title,
       description: body.description,
-      ingredients: body.ingredients,
-      instructions: body.instructions,
+      ingredients: body.ingredients || [],
+      instructions: body.instructions || [],
       cookingTime: body.cookingTime,
       servings: body.servings,
       difficulty: body.difficulty,
       rating: body.rating ?? null,
-      createdAt: new Date().toISOString(),
-    };
-
-    recipes.push(newRecipe);
-    await writeData(recipes);
+      imageUrl: req.file ? req.file.path : null,
+      userId: req.user.id,
+    });
 
     res.status(201).json(newRecipe);
   } catch (err) {
@@ -91,85 +78,83 @@ async function create(req, res, next) {
   }
 }
 
+// PUT /api/recipes/:id
 async function update(req, res, next) {
   try {
-    const id = req.params.id;
-    const body = req.body;
-    const recipes = await readData();
-    const idx = recipes.findIndex((r) => r.id === id);
-    if (idx === -1)
-      return next({ statusCode: 404, message: "Recipe not found" });
+    const body = req.body.recipe ? JSON.parse(req.body.recipe) : {};
 
-    recipes[idx] = {
-      ...recipes[idx],
+    const recipe = await Recipe.findByPk(req.params.id);
+    if (!recipe) return next({ statusCode: 404, message: "Recipe not found" });
+
+    await recipe.update({
       title: body.title,
       description: body.description,
-      ingredients: body.ingredients,
-      instructions: body.instructions,
+      ingredients: body.ingredients || [],
+      instructions: body.instructions || [],
       cookingTime: body.cookingTime,
       servings: body.servings,
       difficulty: body.difficulty,
-      rating: body.rating ?? recipes[idx].rating,
-    };
+      rating: body.rating ?? recipe.rating,
+      imageUrl: req.file ? req.file.path : recipe.imageUrl,
+    });
 
-    await writeData(recipes);
-    res.json(recipes[idx]);
+    res.json(recipe);
   } catch (err) {
     next(err);
   }
 }
 
+// PATCH /api/recipes/:id/rating
 async function updateRating(req, res, next) {
   try {
     const { id } = req.params;
     const { rating } = req.body;
+
     if (rating === null || isNaN(Number(rating))) {
       return next({ statusCode: 400, message: "Rating must be a number" });
     }
 
-    const recipes = await readData();
-    const idx = recipes.findIndex((r) => r.id === id);
-    if (idx === -1)
-      return next({ statusCode: 404, message: "Recipe not found" });
+    const recipe = await Recipe.findByPk(id);
+    if (!recipe) return next({ statusCode: 404, message: "Recipe not found" });
 
-    recipes[idx].rating = Number(rating);
-    await writeData(recipes);
-    res.json({ message: "Rating updated", recipe: recipes[idx] });
+    recipe.rating = Number(rating);
+    await recipe.save();
+
+    res.json({ message: "Rating updated", recipe });
   } catch (err) {
     next(err);
   }
 }
 
+// DELETE /api/recipes/:id
 async function remove(req, res, next) {
   try {
-    const id = req.params.id;
-    const recipes = await readData();
-    const idx = recipes.findIndex((r) => r.id === id);
-    if (idx === -1)
-      return next({ statusCode: 404, message: "Recipe not found" });
-    recipes.splice(idx, 1);
-    await writeData(recipes);
+    const recipe = await Recipe.findByPk(req.params.id);
+    if (!recipe) return next({ statusCode: 404, message: "Recipe not found" });
+
+    await recipe.destroy();
     res.status(204).end();
   } catch (err) {
     next(err);
   }
 }
 
+// GET /api/recipes/stats
 async function getStats(req, res, next) {
   try {
-    const recipes = await readData();
+    const recipes = await Recipe.findAll();
     const total = recipes.length;
+
     const avgCookingTime = total
-      ? recipes.reduce((s, r) => s + Number(r.cookingTime), 0) / total
+      ? recipes.reduce((s, r) => s + (r.cookingTime || 0), 0) / total
       : 0;
 
-    const byDifficulty = recipes.reduce(
-      (acc, r) => {
-        acc[r.difficulty] = (acc[r.difficulty] || 0) + 1;
-        return acc;
-      },
-      { easy: 0, medium: 0, hard: 0 }
-    );
+    const byDifficulty = { easy: 0, medium: 0, hard: 0 };
+    for (const r of recipes) {
+      if (r.difficulty && byDifficulty[r.difficulty] !== undefined) {
+        byDifficulty[r.difficulty]++;
+      }
+    }
 
     const ingredientCounts = {};
     for (const r of recipes) {
@@ -178,6 +163,7 @@ async function getStats(req, res, next) {
         ingredientCounts[key] = (ingredientCounts[key] || 0) + 1;
       });
     }
+
     const mostCommonIngredients = Object.entries(ingredientCounts)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
