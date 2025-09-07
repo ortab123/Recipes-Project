@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const { errorHandler } = require("./middlewares/errorHandler");
 const limiter = require("./middlewares/rateLimiter");
@@ -8,7 +9,7 @@ const favoritesRouter = require("./routes/favorites");
 const sequelize = require("./config/database");
 const User = require("./models/user");
 const Recipe = require("./models/recipe");
-const UserFavorite = require("./models/UserFavorite");
+const UserFavorite = require("./models/userFavorite");
 
 sequelize
   .authenticate()
@@ -25,6 +26,8 @@ const PORT = 3000;
 
 app.use(express.json());
 app.use(morgan("dev"));
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // 🔑 Auth routes
 app.use("/api/auth", authRouter);

@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const Recipe = require("../models/recipe");
-const UserFavorite = require("../models/UserFavorite");
+const UserFavorite = require("../models/userFavorite");
 
 exports.getFavorites = async (req, res, next) => {
   try {
