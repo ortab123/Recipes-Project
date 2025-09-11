@@ -56,8 +56,9 @@ async function getById(req, res, next) {
 // POST /api/recipes
 async function create(req, res, next) {
   try {
-    console.log(req.user);
-    const body = req.body.recipe ? JSON.parse(req.body.recipe) : {};
+    console.log("🍲 req.body in create:", req.body);
+    console.log("👤 req.user:", req.user);
+    const body = req.body.recipe ? JSON.parse(req.body.recipe) : req.body;
 
     const newRecipe = await Recipe.create({
       title: body.title,
