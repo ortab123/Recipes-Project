@@ -1,4 +1,4 @@
-const Recipe = require("../models/recipe");
+const Recipe = require("../sql_models/recipe");
 const { Op } = require("sequelize");
 
 const allowedDifficulties = ["easy", "medium", "hard"];

@@ -26,7 +26,8 @@ This is an **ongoing project** — new features and improvements are added every
 
 ```
 config/
-└── database.js           # Database connection (MySQL/PostgreSQL)
+├── config.json
+├── database.js           # Database connection (MySQL/PostgreSQL)
 controllers/
 ├── authController.js     # Authentication logic
 ├── favoritesController.js # User favorites management

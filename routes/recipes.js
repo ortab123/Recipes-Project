@@ -8,7 +8,6 @@ const {
 const upload = require("../middlewares/upload");
 const authMiddleware = require("../middlewares/authMiddleware");
 const checkRecipeOwnership = require("../middlewares/checkRecipeOwnership");
-// console.log("checkRecipeOwnership loaded:", typeof checkRecipeOwnership);
 const preprocessRecipe = require("../middlewares/preprocessRecipe");
 
 // GET
@@ -29,10 +28,6 @@ router.put(
   "/:id",
   validateIdParam,
   authMiddleware,
-  // (req, res, next) => {
-  //   console.log("Before checkRecipeOwnership middleware");
-  //   next();
-  // },
   checkRecipeOwnership,
   upload.single("image"),
   preprocessRecipe,

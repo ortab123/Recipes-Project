@@ -14,6 +14,7 @@ const sequelize = process.env.DATABASE_URL
   : new Sequelize("recipes_db", "", "", {
       host: "localhost",
       dialect: "mysql",
+      logging: false,
     });
 
 module.exports = sequelize;

@@ -35,35 +35,20 @@ const validateRecipe = [
     .isIn(allowedDifficulties)
     .withMessage(`difficulty must be one of ${allowedDifficulties.join(",")}`),
   body("rating").optional().isFloat({ min: 0, max: 5 }).toFloat(),
-
-  (req, res, next) => {
-    console.log("🔍 req.body before validation:", req.body);
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      console.log("❌ Validation errors:", errors.array());
-      return next({
-        statusCode: 400,
-        message: "Validation failed",
-        details: errors.array(),
-      });
-    }
-    next();
-  },
+  handleValidationErrors,
 ];
 
 const validateIdParam = [
   param("id").isUUID().withMessage("id must be a UUID"),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return next({
-        statusCode: 400,
-        message: "Invalid ID",
-        details: errors.array(),
-      });
-    }
-    next();
-  },
+  handleValidationErrors,
 ];
 
-module.exports = { validateRecipe, validateIdParam };
+function handleValidationErrors(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next();
+}
+
+module.exports = { validateRecipe, validateIdParam, handleValidationErrors };

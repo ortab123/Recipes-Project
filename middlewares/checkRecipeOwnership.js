@@ -1,4 +1,4 @@
-const Recipe = require("../models/recipe");
+const Recipe = require("../sql_models/recipe");
 
 async function checkRecipeOwnership(req, res, next) {
   try {
